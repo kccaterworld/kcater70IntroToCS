@@ -4,8 +4,8 @@ print("Content-Type: text/html\n\n")
 #imports
 import random
 import os
-import cgitb
-cgitb.enable()
+#import cgitb
+#cgitb.enable()
 #os.chmod("../pokemon", 0o606)
 #os.chmod("HTML/", 0o606)
 #os.chmod("CSS/", 0o606)
@@ -367,7 +367,7 @@ for i in range(len(top10Rows)):
     top10Rows[i][0] = str(i + 1)
     top10Rows[i].append(reasons[i])
 
-introPara = "My favorite pokemon ever is Inteloen, from the "
+introPara = "My favorite pokemon ever is Inteloen, from Gen 8. I like Inteleon mostly just because it looks cool."
 
 def genHomePage():
     makePokedexv1PageMultiline = '''
