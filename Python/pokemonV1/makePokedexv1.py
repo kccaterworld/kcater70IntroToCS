@@ -243,6 +243,8 @@ def buildMeta(charset,description,keywords,author,viewport):
     \t<meta name="author" content="{author}">
     \t<meta name="viewport" content="{viewport}">'''
 
+def buildAllPokePara():
+    return "<p>Pokemon is a very famous game that I've always enjoyed playing, although I'm not a hardcore player.</p>"
 
 def buildHeadLinks(rel,type,href):
     return f'''\t<link rel="{rel}" type="{type}" href="{href}">'''
@@ -270,6 +272,7 @@ def genAllPokePageHead():
 def genAllPokePageBody():
     allPokePageBody = ""
     allPokePageBody += buildPokeNavBar()
+    allPokePageBody += buildAllPokePara()
     allPokePageBody += buildTable("All Pokemon",[pokeData[0]],pokeData[1:],[])
 
     return allPokePageBody
