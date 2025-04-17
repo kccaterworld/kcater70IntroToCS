@@ -116,8 +116,6 @@ def buildHomeNavBar():
 	    </ol>
 	</nav>'''
 
-pageMultiline.replace("_NAVBAR",buildPokeNavBar())
-
 #buildTable(caption,header,body,footer) -> string
 #caption -> string
 #header -> list of lists
@@ -193,13 +191,16 @@ for row in pokeData[1:]:
     row.insert(1,buildImage(f"../img/back/{row[0]}"))
     row.insert(1,buildImage(f"../img/front/{row[0]}"))
 
+pageMultiline.replace("_NAVBAR",buildPokeNavBar())
+
 #buildCSSFull() -> string
 def buildCSSFull():
     cssFull = ""
     cssFull += buildCSSBlock("",[],[])
     cssFull += buildCSSBlock("table, th, td, tr",["border"],["1px solid"])
-    cssFull += buildCSSBlock("table",["border-collapse"],["collapse"])
+    cssFull += buildCSSBlock("table",["border-collapse","box-shadow"],["collapse","2px 2px 5px"])
     cssFull += buildCSSBlock("th, td",["padding","text-align"],["2px","center"])
+    cssFull += buildCSSBlock("th",["background-color"],["red"])
     cssFull += buildCSSBlock("nav a",["color","text-decoration"],["#6fddd2","none"])
     cssFull += buildCSSBlock("nav",["height","margin-top","margin-left","margin-right","background-color","color"],["35px","-8px","-8px","-8px","#413A5E","white"])
     cssFull += buildCSSBlock("nav ol",["padding","margin"],["0px","0px 0px 0px 8px"])
@@ -211,11 +212,12 @@ def buildCSSFull():
     cssFull += buildCSSBlock("nav li:hover > ul",["margin-top","display"],["5px","block"])
     cssFull += buildCSSBlock("nav ul",["list-style-type","margin","padding","background-color","border"],["none","10px","0px","blue","1px solid blue"])
     cssFull += buildCSSBlock("nav li ul li",["display","margin","height","left"],["block","5px","17.5px","2.5px"])
-    cssFull += buildCSSBlock(".navbarItem",["font-size","height","width","right"],["20px","30px","125px","0"])
-    cssFull += buildCSSBlock(".navbarHomeItem",["font-size","height","width","right"],["20px","30px","75px","0"])
-    cssFull += buildCSSBlock(".navbarBigItem",["font-size","height","width","right"],["20px","30px","150px","0"])
-    cssFull += buildCSSBlock(".navbarItem:hover, .navbarBigItem:hover, .navbarHomeItem:hover",["background-color"],["blue"])
+    cssFull += buildCSSBlock(".navbarItem",["font-size","height","width","right"],["20px","30px","125px","5px"])
+    cssFull += buildCSSBlock(".navbarHomeItem",["font-size","height","width","right"],["20px","30px","75px","5px"])
+    cssFull += buildCSSBlock(".navbarBigItem",["font-size","height","width","right"],["20px","30px","150px","5px"])
+    cssFull += buildCSSBlock(".navbarItem:hover, .navbarBigItem:hover, .navbarHomeItem:hover",["background-color","border-radius"],["blue","20px"])
     cssFull += buildCSSBlock("nav ol li#navbarPagesDropdown.navbarItem ul li a.pagesLink:hover",["color", "background-color"],["green","yellow"])
+    cssFull += buildCSSBlock("a",["position","left"],["relative","10px"])
     return cssFull
 
 #buildCSSBlock(cssElement,cssProperty,cssValue) -> string

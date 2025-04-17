@@ -5,10 +5,14 @@
 	}
 	table {
        border-collapse: collapse;
+       box-shadow: 2px 2px 5px;
 	}
 	th, td {
        padding: 2px;
        text-align: center;
+	}
+	th {
+       background-color: red;
 	}
 	nav a {
        color: #6fddd2;
@@ -76,25 +80,30 @@
        font-size: 20px;
        height: 30px;
        width: 125px;
-       right: 0;
+       right: 5px;
 	}
 	.navbarHomeItem {
        font-size: 20px;
        height: 30px;
        width: 75px;
-       right: 0;
+       right: 5px;
 	}
 	.navbarBigItem {
        font-size: 20px;
        height: 30px;
        width: 150px;
-       right: 0;
+       right: 5px;
 	}
 	.navbarItem:hover, .navbarBigItem:hover, .navbarHomeItem:hover {
        background-color: blue;
+       border-radius: 20px;
 	}
 	nav ol li#navbarPagesDropdown.navbarItem ul li a.pagesLink:hover {
        color: green;
        background-color: yellow;
+	}
+	a {
+       position: relative;
+       left: 10px;
 	}
 	
