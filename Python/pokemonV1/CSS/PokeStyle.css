@@ -1,4 +1,7 @@
- {
+nav {
+       font: 12px Source Sans Pro Topnav, sans-serif;
+	}
+	 {
 	}
 	table, th, td, tr {
        border: 1px solid;
@@ -73,8 +76,9 @@
 	nav li ul li {
        display: block;
        margin: 5px;
-       height: 17.5px;
-       left: 2.5px;
+       height: 25px;
+       width: 201.5px;
+       right: 6px;
 	}
 	.navbarItem {
        font-size: 20px;
@@ -101,9 +105,17 @@
 	nav ol li#navbarPagesDropdown.navbarItem ul li a.pagesLink:hover {
        color: green;
        background-color: yellow;
+       border-radius: 5px;
 	}
 	a {
        position: relative;
        left: 10px;
+	}
+	ul li:hover {
+       background-color: yellow;
+	}
+	#tableTypes {
+       text-decoration: none;
+       color: red;
 	}
 	

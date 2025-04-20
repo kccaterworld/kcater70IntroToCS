@@ -57,7 +57,7 @@ def buildPokeNavBar():
             <li id="navbarPagesDropdown" class="navbarItem">Types
                 <ul>
                     <!-- Type pages -->
-                    <li><a href="bug.html" class="pagesLink">Bug Types</a></li>
+                    <li style="border-radius: 0px 15px 0px 0px;"><a href="bug.html" class="pagesLink">Bug Types</a></li>
                     <li><a href="dragon.html" class="pagesLink">Dragon Types</a></li>
                     <li><a href="electric.html" class="pagesLink">Electric Types</a></li>
                     <li><a href="fairy.html" class="pagesLink">Fairy Types</a></li>
@@ -73,7 +73,7 @@ def buildPokeNavBar():
                     <li><a href="psychic.html" class="pagesLink">Psychic Types</a></li>
                     <li><a href="rock.html" class="pagesLink">Rock Types</a></li>
                     <li><a href="steel.html" class="pagesLink">Steel Types</a></li>
-                    <li style="padding-bottom: 5px"><a href="water.html" class="pagesLink">Water Types</a></li>
+                    <li style="padding-bottom: 5px; border-radius: 0px 0px 15px 15px;"><a href="water.html" class="pagesLink">Water Types</a></li>
                 </ul>
             </li>
             <li class="navbarBigItem"><a href="../HTML/allpokemon.html">All Pokemon</a></li>
@@ -92,7 +92,7 @@ def buildHomeNavBar():
             <li id="navbarPagesDropdown" class="navbarItem">Types
                 <ul>
                     <!-- Type pages -->
-                    <li><a href="HTML/bug.html" class="pagesLink">Bug Types</a></li>
+                    <li style="border-radius: 15px 15px 0px 0px;"><a href="HTML/bug.html" class="pagesLink">Bug Types</a></li>
                     <li><a href="HTML/dragon.html" class="pagesLink">Dragon Types</a></li>
                     <li><a href="HTML/electric.html" class="pagesLink">Electric Types</a></li>
                     <li><a href="HTML/fairy.html" class="pagesLink">Fairy Types</a></li>
@@ -108,13 +108,22 @@ def buildHomeNavBar():
                     <li><a href="HTML/psychic.html" class="pagesLink">Psychic Types</a></li>
                     <li><a href="HTML/rock.html" class="pagesLink">Rock Types</a></li>
                     <li><a href="HTML/steel.html" class="pagesLink">Steel Types</a></li>
-                    <li style="padding-bottom: 5px"><a href="HTML/water.html" class="pagesLink">Water Types</a></li>
+                    <li style="padding-bottom: 5px; border-radius: 0px 0px 15px 15px;"><a href="HTML/water.html" class="pagesLink">Water Types</a></li>
                 </ul>
             </li>
             <li class="navbarBigItem"><a href="HTML/allpokemon.html">All Pokemon</a></li>
             <li class="navbarItem"><a href="HTML/top10.html">My Top 10</a></li>
 	    </ol>
 	</nav>'''
+
+def buildLink(ref: str,content: str,newTab: bool = False, styles: str = "", id: str = ""):
+    if newTab == True:
+        nT = '''target="_blank"'''
+    elif newTab == False:
+        nT = ''''''
+    else:
+        nT = ''''''
+    return f'''<a id=f"{id}" href="{ref}" {nT} style="left: 0;" style="{styles}"> {content} </a>'''
 
 #buildTable(caption,header,body,footer) -> string
 #caption -> string
@@ -191,11 +200,18 @@ for row in pokeData[1:]:
     row.insert(1,buildImage(f"../img/back/{row[0]}"))
     row.insert(1,buildImage(f"../img/front/{row[0]}"))
 
+pokeData[0][4] = buildLink("../HTML","Type 1",True)
+pokeData[0][5] = buildLink("../HTML","Type 2",True)
+'''for row in pokeData[1:]:
+    row[4] = buildLink(ref=f"../HTML/{row[4].lower()}.html",content=f"{row[4]}",newTab=True,styles="text-decoration: none; color: red;",id="tableTypes")
+    row[5] = buildLink(f"../HTML/{row[5].lower()}.html",f"{row[5]}",True,styles="text-decoration: none; color: red;",id="tableTypes")'''
+
 pageMultiline.replace("_NAVBAR",buildPokeNavBar())
 
 #buildCSSFull() -> string
 def buildCSSFull():
     cssFull = ""
+    cssFull += buildCSSBlock("nav",["font"],["12px Source Sans Pro Topnav, sans-serif"])
     cssFull += buildCSSBlock("",[],[])
     cssFull += buildCSSBlock("table, th, td, tr",["border"],["1px solid"])
     cssFull += buildCSSBlock("table",["border-collapse","box-shadow"],["collapse","2px 2px 5px"])
@@ -211,13 +227,15 @@ def buildCSSFull():
     cssFull += buildCSSBlock("nav li ul",["display","position","width","top","left","border-radius"],["none","absolute","200px","25px","-10px","0px 25px 25px 25px"])
     cssFull += buildCSSBlock("nav li:hover > ul",["margin-top","display"],["5px","block"])
     cssFull += buildCSSBlock("nav ul",["list-style-type","margin","padding","background-color","border"],["none","10px","0px","blue","1px solid blue"])
-    cssFull += buildCSSBlock("nav li ul li",["display","margin","height","left"],["block","5px","17.5px","2.5px"])
+    cssFull += buildCSSBlock("nav li ul li",["display","margin","height","width","right"],["block","5px","25px","201.5px","6px"])
     cssFull += buildCSSBlock(".navbarItem",["font-size","height","width","right"],["20px","30px","125px","5px"])
     cssFull += buildCSSBlock(".navbarHomeItem",["font-size","height","width","right"],["20px","30px","75px","5px"])
     cssFull += buildCSSBlock(".navbarBigItem",["font-size","height","width","right"],["20px","30px","150px","5px"])
     cssFull += buildCSSBlock(".navbarItem:hover, .navbarBigItem:hover, .navbarHomeItem:hover",["background-color","border-radius"],["blue","20px"])
-    cssFull += buildCSSBlock("nav ol li#navbarPagesDropdown.navbarItem ul li a.pagesLink:hover",["color", "background-color"],["green","yellow"])
+    cssFull += buildCSSBlock("nav ol li#navbarPagesDropdown.navbarItem ul li a.pagesLink:hover",["color", "background-color","border-radius"],["green","yellow","5px"])
     cssFull += buildCSSBlock("a",["position","left"],["relative","10px"])
+    cssFull += buildCSSBlock("ul li:hover",["background-color"],["yellow"])
+    cssFull += buildCSSBlock("#tableTypes",["text-decoration","color"],["none","red"])
     return cssFull
 
 #buildCSSBlock(cssElement,cssProperty,cssValue) -> string
@@ -372,7 +390,7 @@ for i in range(len(top10Rows)):
     top10Rows[i][0] = str(i + 1)
     top10Rows[i].append(reasons[i])
 
-introPara = "My favorite pokemon ever is Inteloen, from Gen 8. I like Inteleon mostly just because it looks cool."
+introPara = "My favorite pokemon ever is Inteleon, from Gen 8. I like Inteleon mostly just because it looks cool (by that I mean that it went on my hear me out cake)."
 
 def genHomePage():
     makePokedexv1PageMultiline = '''
@@ -387,7 +405,14 @@ def genHomePage():
     </html>'''
     makePokedexv1PageBody = ""
     makePokedexv1PageBody += buildHomeNavBar()
-    makePokedexv1PageBody += "<p>" + introPara + "</p>"
+    makePokedexv1PageBody += "<h2>" + introPara + "</h2>"
+    makePokedexv1PageBody += "<br>"
+    makePokedexv1PageBody += '<img src="https://archives.bulbagarden.net/media/upload/d/dc/0818Inteleon.png" alt="Inteleon" width="707" height="707">'
+    for i in range(500):
+        makePokedexv1PageBody += "\n<br>"
+    makePokedexv1PageBody += "<h1>The minions have a message to the people of Ms. Alonso's class:</h1>"
+    makePokedexv1PageBody += "<p>Haiiiiiiiiii</p><br>"
+    makePokedexv1PageBody += '''<img src="../assets/hackinghaha.gif">'''
     makePokedexv1PageHead = ""
     makePokedexv1PageHead +=  titleCSS("Pokemon Home")
     makePokedexv1PageHead += indent + newLine + buildMeta("UFT-8",f"My home page","Pokemon","Kemal Cater","width=device-width, initial-scale=1.0",)
