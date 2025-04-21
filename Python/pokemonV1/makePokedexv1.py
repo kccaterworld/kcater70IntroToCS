@@ -31,7 +31,6 @@ pageMultiline = '''
   </body>
 </html>'''
 
-typesList = ["bug","dragon","electric","fairy","fighting","fire","flying","ghost","grass","ground","ice","normal","poison","psychic","rock","steel","water"]
 
 with open("pokemon.csv", "r") as pokeRawData:
     pokeRawData = pokeRawData.read()
@@ -44,6 +43,7 @@ with open("pokemon.csv", "r") as pokeRawData:
 def giveFilePerms(fileName):
     os.chmod(fileName, 0o606)
 
+typesList = [row[i].lower() for row in pokeData[1:] for i in (4, 5) if row[i]]
 
 #buildPokeNavBar()
 def buildPokeNavBar():
@@ -423,7 +423,7 @@ def genHomePage():
 print(genHomePage())
 
 #Write all other files next
-for type in typesList:
+for type in [row[i].lower() for row in pokeData[1:] for i in (4, 5) if row[i]]:
     genPage(f"HTML/{type}.html",buildTypePage(type))
 
 genPage("CSS/PokeStyle.css",buildCSSFull())
