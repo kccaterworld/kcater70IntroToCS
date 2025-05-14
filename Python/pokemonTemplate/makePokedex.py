@@ -3,7 +3,7 @@ print("Content-Type: text/html\n\n")
 
 #globals
 #top 10, fill it out
-top10 = ["","","","","","","","","",""] #TODO: Fill each string with a single pokemon name, capitalized
+top10 = ["Squirtle","Bulbasaur","Charizard","Beedrill","Rattata","Ninetales","Meowth","Graveler","Farfetch'd","Gyarados"]
 reasons = ["","","","","","","","","",""]
 #globals for meta tag, fill them out, leave f-strings in
 author = "" #TODO: put your name here
@@ -55,24 +55,6 @@ navbar = '''<div class="navbar">
 	</nav>'''
 
 ##helper functions
-#load csv and split it into makeTable format
-with open("pokemon.csv","r") as pokeData:
-    pokeData = pokeData.read()
-    pokeData = pokeData.split("\n")
-    pokeData = [item.split(",") for item in pokeData]
-    pokeData = pokeData[0:-1]
-
-#add images to the table 
-pokeData[0].insert(1,"Front")
-pokeData[0].insert(2,"Back")
-for row in pokeData[1:]:
-    row.insert(1,f'''<img src="../img/front/{row[0]}.png">''')
-    row.insert(2,f'''<img src="../img/back/{row[0]}.png">''')
-
-#make typesList (a list of the types) from the table
-typesList = sorted(list({cell for row in pokeData[1:] for cell in row[4:6] if cell}))
-print(typesList)
-print(len(typesList))
 
 #make table function
 def html_table(header,table):
@@ -142,6 +124,25 @@ def writePage(path,content):
     file = open(path, "w")
     file.write(content)
     file.close()
+
+#load csv and split it into makeTable format
+with open("pokemon.csv","r") as pokeData:
+    pokeData = pokeData.read()
+    pokeData = pokeData.split("\n")
+    pokeData = [item.split(",") for item in pokeData]
+    pokeData = pokeData[0:-1]
+
+#add images to the table 
+pokeData[0].insert(1,"Front")
+pokeData[0].insert(2,"Back")
+for row in pokeData[1:]:
+    row.insert(1,f'''<img src="../img/front/{row[0]}.png">''')
+    row.insert(2,f'''<img src="../img/back/{row[0]}.png">''')
+
+#make typesList (a list of the types) from the table
+typesList = sorted(list({cell for row in pokeData[1:] for cell in row[4:6] if cell}))
+print(typesList)
+print(len(typesList))
 
 #printing home page
 print(makePage("Home",genHomePage(),homeDescription,homeKeywords))
