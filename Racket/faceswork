@@ -1,0 +1,80 @@
+#lang racket
+(require 2htdp/image)  
+(define (face)
+  [begin
+    (underlay/xy
+     (underlay/xy
+      (underlay/xy
+       (ellipse 100 100 "solid" "yellow")
+       25 20
+       (ellipse 10 25 "solid" "black")
+      )
+      65 20
+      (ellipse 10 25 "solid" "black")
+     )
+     25 75
+     (rectangle 50 10 "solid" "black")
+    )
+  ]
+)
+(face)
+(define (happy-face)
+  [begin
+    (underlay/xy
+     (underlay/xy
+      (underlay/xy
+       (ellipse 100 100 "solid" "yellow")
+       25 20
+       (ellipse 10 25 "solid" "black")
+      )
+      65 20
+      (ellipse 10 25 "solid" "black")
+     )
+     15 65
+     (add-curve (rectangle 0 0 0 "blue") 15 0
+           -90 0.75 55 0
+           90 0.75
+           (pen "black" 10 "solid" "butt" "miter"))
+    )
+  ]
+)
+(happy-face)
+(define (sad-face)
+  [begin
+    (underlay/xy
+     (underlay/xy
+      (underlay/xy
+       (ellipse 100 100 "solid" "yellow")
+       25 20
+       (ellipse 10 25 "solid" "black")
+      )
+      65 20
+      (ellipse 10 25 "solid" "black")
+     )
+     15 55
+     (add-curve (rectangle 0 0 0 "blue") 15 0
+           90 0.75 55 0
+           -90 0.75
+           (pen "black" 10 "solid" "butt" "miter"))
+    )
+  ]
+)
+(sad-face)
+(define (face2 mood)
+  (if (equal? mood "sad")
+      (sad-face)
+      (if (equal? mood "happy")
+          (happy-face)
+          (if (equal? mood "so-so")
+              (face)
+              (display "NOPEEE")
+          )
+      )
+  )
+)
+(define (face3)
+  (display "How do you feel?(sad,happy,so-so)")
+  (define mood (read-line))
+  (face2 mood)
+)
+(face3)

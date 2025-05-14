@@ -1,0 +1,98 @@
+/* Drafting area
+Sunset gradient:
+background: rgb(97,66,113);
+background: linear-gradient(0deg, rgba(97,66,113,1) 0%, rgba(160,82,125,1) 20%, rgba(214,106,120,1) 40%, rgba(250,144,107,1) 60%, rgba(255,194,97,1) 80%, rgba(249,248,113,1) 100%);
+
+Sky gradient:
+background: rgb(97,66,113);
+background: linear-gradient(0deg, rgba(97,66,113,1) 0%, rgba(80,90,147,1) 20%, rgba(29,116,173,1) 40%, rgba(0,141,186,1) 60%, rgba(0,164,183,1) 80%, rgba(0,184,168,1) 100%);
+
+Beach gradient:
+background: rgb(0,96,143);
+background: linear-gradient(180deg, rgba(0,96,143,1) 0%, rgba(51,165,222,1) 20%, rgba(127,208,237,1) 40%, rgba(216,239,255,1) 60%, rgba(248,242,238,1) 80%, rgba(250,215,167,1) 100%);
+
+Salmon gradient:
+background: rgb(87,25,56);
+background: linear-gradient(0deg, rgba(87,25,56,1) 0%, rgba(235,135,174,1) 20%, rgba(241,144,184,1) 40%, rgba(250,184,214,1) 60%, rgba(248,209,223,1) 80%, rgba(254,254,254,1) 100%);
+
+
+
+Cherryblossoms palette:
+1: #BAE0D8
+2: #BAE0BE
+3: #E1BDBA
+4: #61322E
+5: #2E6156
+6: #2E6133
+
+
+*/
+body {
+	/*Gradient background*/
+	background-color: #3f1bde;
+	background-image: linear-gradient(160deg, #3f1bde 0%, #1b73de 100%);
+}
+/*Navbar Styles*/
+nav a {
+	/*Dictates link color within the navbar*/
+	color: #6fddd2;
+	text-decoration: none;
+}
+nav {
+	/*Navbar*/
+	height: 35px;
+	margin-top: -8px;
+	margin-right: -8px;
+	margin-left: -8px;
+	background-color: #413A5E;
+	color: white;
+}
+nav ol{
+	/*List of navbar items*/
+	padding: 0px;
+	margin: 0px 0px 0px 8px;
+}
+nav li {
+	/*Actual navbar items*/
+	height: 20px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	display: inline-block;
+	position: relative;
+}
+nav li#navbarPagesDropdown {
+	height: 40px;
+}
+nav li ul {
+	/*Dropdown menu initial setup*/
+	display: none;
+	position: absolute;
+	width: 100px;
+	top: 20px;
+	left: -11px;
+}
+nav li:hover > ul {
+	/*Displays dropdown menu*/
+	margin-top: 5px;
+	display: block;
+}
+nav ul{
+	/*Settings for dropdown menu*/
+	list-style-type: none;
+	margin: 10px;
+	padding: 0px;
+	background-color: #614271;
+	border: 1px solid #614271;
+}
+nav li ul li {
+	/*Settings for dropdown menu items*/
+	display: block;
+	margin: 5px;
+	height: 17.5px;
+	left:2.5px;
+}
+.navbarItem {
+	font-size: 20px;
+}
+/*Page Header Styles*/

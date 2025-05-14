@@ -1,0 +1,36 @@
+#lang racket
+(define (myRng start end inc)
+  (if (>= start end)
+      (list)
+      (append (list start) (myRng (+ start inc) end inc))
+  )
+)
+(myRng 0 5 1)
+(myRng 1 5 2)
+(range 5)
+(range 1 5 2)
+(range 11)
+(define (convert str)
+  (with-input-from-string str
+    read))
+(define (num->list n)
+  (local 
+    ((define (num->list n)
+       (map (lambda (c)
+              (char->num c))
+            (string->list (number->string n))))
+
+    (define (char->num c)
+      (- (char->integer c) 48)))
+
+    (num->list n)))
+(define (myRev lst)
+  (if (list? lst)
+      (if (null? lst)
+          lst
+          (append (myRev (cdr lst)) (list (car lst)))
+      )
+      (if (integer? lst) "" "")
+  )
+)
+(myRev (list 1 2 3 4))

@@ -1,0 +1,13 @@
+#lang racket
+(define (toh n s e d)
+  (if (= n 1)
+      [begin
+        (display s)(display " to ")(displayln d)
+      ]
+      [begin
+        (toh (- n 1) s d e)
+        (toh 1 s e d)
+        (toh (- n 1) e s d)
+      ]
+  )
+)
