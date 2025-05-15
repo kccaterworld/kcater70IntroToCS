@@ -214,13 +214,19 @@ plt.savefig("IMG/incidentsPerYearGraph.png")
 plt.clf()
 
 #Print home page
-print(makePage())
+print(makePage(head = {
+    "title": "Hate Crimes in the US",
+    "description": "A website exploring hate crimes in the US from 2010 to 2022.",
+    "keywords": "data, python, hate crimes, analysis, trends, matplotlib, graph",
+    "author": ""},
+    body = [["<h1>Some Text</h1>"],
+        ["Table of Data?"],]))
 
 #Write to the files:
 writePage(f"HTML/{kemalOsis}.html",makePage(head = {
     "title": "General Trends and Analysis of Hate Crimes in the US",
     "description": "A graph showing the trends and analysis of hate crimes in the US.",
-    "keywords": "dta, python, hate crimes, analysis, trends, matplotlib, graph",
+    "keywords": "data, python, hate crimes, analysis, trends, matplotlib, graph",
     "author": "Kemal Cater"},
     body = [["<h1>General Trends and Analysis of Hate Crimes in the US</h1>"],
         ["<img src='IMG/incidentsPerYearGraph.png' alt='Graph of Hate Crimes in the US'>"],]))
