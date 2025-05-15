@@ -41,20 +41,17 @@ pageMultiline = '''
 #rotate -> int
 #Reads a CSV file and returns a list of lists, where each inner list is a row in the CSV file.
 def readCSV(path: str = "",
-            rotate: int = 0) -> list:
+            rotate: int = 0):
     with open(path, "r") as file:
         table = [row.split(",") for row in file.read().split("\n")]
-    if rotate > 0:
         return myRot90(table, rotate)
-    else:
-        return table
-	
+
 #writePage(path, content) -> None
 #page -> string
 #content -> string
 #Writes the content to the specified path, creating a new file if it doesn't exist.
 #If the file already exists, it will be overwritten.
-def writePage(path, content):
+def writePage(path: str, content: str = "") -> None:
     with open(path, "w") as file:
         file.write(content)
 
@@ -63,8 +60,8 @@ def writePage(path, content):
 #Returns the mean of the numbers in vals.
 #If vals is empty, it will return 0.0.
 def mean(vals: tuple = ()) -> float:
-    if len(vals) == 0:
-        return 0.0
+    if len(vals) == 1:
+        return float(vals[0])
     sum = 0
     for number in vals:
         sum += number
@@ -79,9 +76,11 @@ def mean(vals: tuple = ()) -> float:
 #Rotates the array 90 degrees counter-clockwise numTimes times.
 #If numTimes is 0, it will return the original array.
 #If numTimes is 1, it will return the array rotated 90 degrees counter-clockwise.
-def myRot90(array: list = [[]],
+def myRot90(array: list[list[str]] | list[list[int]] = [[]],
             numTimes: int = 1,
-            axes: list = []) -> list:
+            axes: list[int] = []):
+    if numTimes == 0:
+        return array
     if numTimes == 1:
         return [list(row) for row in zip(*array)]
     else:
