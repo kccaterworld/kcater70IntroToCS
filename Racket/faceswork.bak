@@ -1,0 +1,46 @@
+#lang racket
+(require 2htdp/image)  
+(define (face)
+  [begin
+    (underlay/xy
+     (underlay/xy
+      (underlay/xy
+       (ellipse 100 100 "solid" "yellow")
+       25 20
+       (ellipse 10 25 "solid" "black")
+      )
+      65 20
+      (ellipse 10 25 "solid" "black")
+     )
+     25 75
+     (rectangle 50 10 "solid" "black")
+    )
+  ]
+)
+(face)
+(define (happy-face)
+  [begin
+    (underlay/xy
+     (underlay/xy
+      (underlay/xy
+       (ellipse 100 100 "solid" "yellow")
+       25 20
+       (ellipse 10 25 "solid" "black")
+      )
+      65 20
+      (ellipse 10 25 "solid" "black")
+     )
+     15 35
+     (underlay/xy
+      (ellipse 50 50 "solid" "black")
+      -12.5 -10
+      (underlay/offset
+       (ellipse 37.5 50 "solid" "yellow")
+       0 0
+       (rectangle 75 20 "solid" "yellow")
+      )
+     )
+    )
+  ]
+)
+(happy-face)

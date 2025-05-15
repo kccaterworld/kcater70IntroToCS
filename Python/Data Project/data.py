@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+print("Content-Type: text/html\n\n")
+
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
 
@@ -15,6 +18,9 @@ lineBreak = "\n<br>"
 newLine = '''
 '''
 yearFreq = {}
+kemalOsis = 235824331
+emmaosis = 0
+stellaOSIS = 0
 #Multiline for HTML Webpages, it gets replaced by the actual content by certain functions
 pageMultiline = '''
 <!DOCTYPE html>
@@ -89,13 +95,49 @@ def freqYears(data):
             yearFreq[year] = 1
     return yearFreq
 
+#makePage(head, body) -> str
+#head -> dict
+#body -> list
+#head should be a dict of a certain shape, with the keys "title", "description", "keywords", and "author".
+#body should be a list of strings, which will be the body of the HTML page.
+#Each string in body should be a valid HTML element.
+def makePage(head:dict = {"title": "title",
+                          "description": "description",
+                          "keywords": "keywords",
+                          "author": "author"},
+             body:list = ["<p> Body Element 1</p>", "<p> Body Element 2</p>"]) -> str:
+    headContent = f'''<title>{head["title"]}</title>
+        <link rel="stylesheet" href="CSS/DPStyle.css">
+        <meta name="description" content="{head["description"]}">
+        <meta name="keywords" content="{head["keywords"]}">
+        <meta name="author" content="{head["author"]}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">'''
+    bodyContent = "".join([element  + "\n\t\t" for element in body])
+    return f'''
+<!DOCTYPE html>
+<html>
+    <head>
+        {headContent}
+    </head>
+    <body>
+        {bodyContent}
+    </body>
+</html>
+'''
+
+
+
 #Main Program
 #Read the CSV
 dataList = readCSV("hatecrimes.csv")[0:-1]
 
+###########################################################################################################################
+# K. Cater - General trends of hate crimes in the US
+###########################################################################################################################
+
 #Make a list of the years:
 yearsList = sorted(list({row[1] for row in dataList}), reverse = True)[1:]
-
 #Define Axis Lists
 freqYears([row[1] for row in dataList[1:]])
 xAxis = [int(year) for year in yearsList]
@@ -104,8 +146,6 @@ avgIncsYAxis = [round((totIncsYAxis[yearsList.index(year)] / yearFreq[year]),2) 
 totVicsYAxis = [sum([int(row[42]) for row in dataList if row[1] == year]) for year in yearsList]
 totOffsYAxis = [sum([int(row[43]) for row in dataList if row[1] == year]) for year in yearsList]
 yTicks = range(int(min([min(yAxis) for yAxis in [totIncsYAxis, avgIncsYAxis, totVicsYAxis, totOffsYAxis]])),max([max(yAxis) for yAxis in [totIncsYAxis, avgIncsYAxis, totVicsYAxis, totOffsYAxis]]))
-
-#Make the graphs
 #Total Incidents Per Year
 plt.figure(figsize=(15, 8))
 plt.plot(xAxis,
@@ -120,7 +160,6 @@ plt.plot(xAxis,
          markeredgecolor="black",
          markeredgewidth=2,
          markerfacecolor="black")
-
 #Average County Incidents per Year
 plt.plot(xAxis,
          avgIncsYAxis,
@@ -134,7 +173,6 @@ plt.plot(xAxis,
          markeredgecolor="black",
          markeredgewidth=2,
          markerfacecolor="black")
-
 #Total Victims Per Year
 plt.plot(xAxis,
          totVicsYAxis,
@@ -148,7 +186,6 @@ plt.plot(xAxis,
          markeredgecolor="black",
          markeredgewidth=2,
          markerfacecolor="black")
-
 #Total Offenders Per Year
 plt.plot(xAxis,
          totOffsYAxis,
@@ -162,21 +199,30 @@ plt.plot(xAxis,
          markeredgecolor="black",
          markeredgewidth=2,
          markerfacecolor="black")
-
 #Plot stuff
 plt.title("Title")
 plt.xlabel("X-Axis Label")
 plt.ylabel("Y-Axis Label")
-plt.xticks(xAxis, rotation=0, ha='right')
+plt.xticks(xAxis, rotation=45, ha='right')
 plt.yticks(yTicks, rotation=0, ha='right')
 plt.legend(loc='upper left')
 plt.grid(True, linestyle='--', alpha=0.5)
 plt.gca().xaxis.set_major_locator(MultipleLocator(1))
 plt.gca().yaxis.set_major_locator(MultipleLocator(20))
 plt.gca().set_aspect('auto', adjustable='box')
-plt.savefig("incidentsPerYearGraph.png")
+plt.savefig("IMG/incidentsPerYearGraph.png")
+plt.clf()
 
-#Tests
-print(dataList)
-print(int(max([max(axis) for axis in [totIncsYAxis, avgIncsYAxis, totVicsYAxis, totOffsYAxis]])))
-plt.show()
+#Print home page
+print(makePage())
+
+#Write to the files:
+writePage(f"HTML/{kemalOsis}.html",makePage(head = {
+    "title": "General Trends and Analysis of Hate Crimes in the US",
+    "description": "A graph showing the trends and analysis of hate crimes in the US.",
+    "keywords": "dta, python, hate crimes, analysis, trends, matplotlib, graph",
+    "author": "Kemal Cater"},
+    body = [["<h1>General Trends and Analysis of Hate Crimes in the US</h1>"],
+        ["<img src='IMG/incidentsPerYearGraph.png' alt='Graph of Hate Crimes in the US'>"],]))
+writePage(f"HTML/{emmaosis}.html", makePage())
+writePage(f"HTML/{stellaOSIS}.html", makePage())

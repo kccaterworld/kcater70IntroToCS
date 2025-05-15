@@ -1,0 +1,21 @@
+#lang racket
+(define (str->list str)
+  (if (= (length (string->list str)) 1)
+      (string (string->list str))
+      (append (string (car (string->list str))) (str->list (cdr (string->list str))))
+  )
+)
+(str->list "kemal")
+;;(convert "(1 2 3 4 5)")
+(define (num->list n)
+  (local 
+    ((define (num->list n)
+       (map (lambda (c)
+              (char->num c))
+            (string->list (number->string n))))
+
+    (define (char->num c)
+      (- (char->integer c) 48)))
+
+    (num->list n)))
+(num->list 12345)
