@@ -3,24 +3,18 @@ print("Content-Type: text/html\n\n")
 
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
+import random
 
-#What I'm doing: line plot
-#Ideas: __ lines, one graph
-#   Total incidents per year
-#   Average incidents per year
-#   Victims per year
-#   Offenders per year
 
-#TODO: test multiple lines one graph (just do multiple plt.pltot()s? and then multiple legen things? lowk idk)
 #Globals
 indent = "    "
 lineBreak = "\n<br>"
 newLine = '''
 '''
 yearFreq = {}
-kemalOsis = 235824331
-emmaosis = 0
-stellaOSIS = 0
+kemalOSIS = "235824331"
+emmaOSIS = "Emma"
+stellaOSIS = "239363948"
 #Multiline for HTML Webpages, it gets replaced by the actual content by certain functions
 pageMultiline = '''
 <!DOCTYPE html>
@@ -34,7 +28,38 @@ pageMultiline = '''
 '''
 
 
+def navbar():
+	base = "http://marge.stuy.edu/~eching70/DataProject/"
+	nav = f'''
+	<nav>
+  	<ol>
+    	<li><a href="{base}data.py">Home Page</a></li>
+    	<li><a href="{base}HTML/hatecrime.html">Hate Crimes through the years</a></li>
+    	<li><a href="{base}HTML/race.html">Race</a></li>
+    	<li><a href="{base}HTML/religion.html">Religion</a></li>
+  	</ol>
+	</nav>
+	'''
+	return nav.strip()
+
+
+
 #Helper Functions (copied from my pythonFuncs file)
+
+
+def navbar():
+	base = "http://marge.stuy.edu/~eching70/DataProject/"
+	nav = f'''
+	<nav>
+  	<ol>
+    	<li><a href="../data.py">Home Page</a></li>
+    	<li><a href="HTML/hatecrime.html">Hate Crimes through the years</a></li>
+    	<li><a href="HTML/race.html">Race</a></li>
+    	<li><a href="HTML/religion.html">Religion</a></li>
+  	</ol>
+	</nav>
+	'''
+	return nav.strip()
 
 #readCSV(path, rotate) -> list
 #path -> string
@@ -112,7 +137,7 @@ def makePage(head:dict = {"title": "title",
         <meta name="author" content="{head["author"]}">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">'''
-    bodyContent = "".join([element  + "\n\t\t" for element in body])
+    bodyContent = "".join([element[0]  + "\n\t\t" for element in body])
     return f'''
 <!DOCTYPE html>
 <html>
@@ -212,20 +237,107 @@ plt.gca().set_aspect('auto', adjustable='box')
 plt.savefig("IMG/incidentsPerYearGraph.png")
 plt.clf()
 
+
+
+###########################################################################################################################
+# E. Ching - 
+###########################################################################################################################
+
+
+
+###########################################################################################################################
+# S. Kubersky - Pie graph illustrating trends of religion based hate crimes
+###########################################################################################################################
+
+#Function to make header in HTML website
+def makeHeader(h,num):
+   return "<h"+str(num)+">"+str(h)+"</h"+str(num)+">\n"
+
+#Function to make a Paragraph in HTML website
+def makeParagraph(p):
+	global indent
+	return indent + "<p>"+str(p)+"</p>\n"
+
+'''#Function to make the list of all the data
+def hatecrime_data():
+    dataList = []
+    with open('hatecrimes.csv') as text:
+        data = text.read()
+        rows = data.split("\n")
+        dataList = [row.split(',') for row in rows if row]
+    return dataList'''
+
+#This function generates the pie chart for my website
+def religionGraph():
+    data = dataList[0]
+    mylabels = data[15:23]
+    data_list = dataList
+    jewish = 0
+    catholic = 0
+    protestant = 0
+    islamic = 0
+    multiple = 0
+    atheism = 0
+    religion = 0
+    other = 0
+    for row in data_list[1:]:
+        jewish += int(row[15])
+        catholic += int(row[16])
+        protestant += int(row[17])
+        islamic += int(row[18])
+        multiple += int(row[19])
+        atheism += int(row[20])
+        religion += int(row[21])
+        other += int(row[22])
+    raw = [jewish, catholic, protestant, islamic, multiple, atheism, religion, other]
+    total = 0
+    for i in raw:
+        total += i
+    percentage = []
+    for i in raw:
+        percent = (i / total) * 100
+        percentage.append(percent)
+    colors = ['gold', 'lightskyblue', 'yellowgreen', 'dodgerblue', 'lightcoral', 'coral', 'cornflowerblue', 'yellow']
+    myexplode = [0, 0, 0, 0, .5, 0, .5, 0]
+    plt.figure(figsize=(20, 10))
+    plt.pie(percentage, labels=mylabels, colors=colors, explode = myexplode)
+    plt.legend(title = "Relgions:", loc='lower left')
+    plt.title('Hate Crimes in New York State By Religion')
+    plt.savefig("IMG/ReligionPlot.png")
+
+def genReligionBody():
+	body = makeHeader("Correlation Between Religion, in Hate Crime Statistics", 1)
+	body += makeParagraph("This shows how in New York State there is an issue with anti-semitism")
+	body +='''	<img src="IMG/ReligionPlot.png" alt="Religion">'''
+	return body
+
+religionGraph()
+
+religionpage = site.replace("?TITLE?", "The Corrolation Between Hate Crimes and Religion")
+religionpage = religionpage.replace("?STYLE?", '<link rel="stylesheet" href="CSS/PokeStyle.css">')
+religionpage = religionpage.replace("?BODY?", genReligionBody())
+f = open(f"HTML/{stellaOSIS}.html", "w")
+f.write(religionpage)
+f.close()
+
+
 #Print home page
 print(makePage(head = {"title": "Hate Crimes in the US",
     "description": "A website exploring hate crimes in the US from 2010 to 2022.",
     "keywords": "data, python, hate crimes, analysis, trends, matplotlib, graph",
     "author": ""},
-    body = [["<h1>Some Text</h1>"],
-        ["Table of Data?"],]))
+    body = [["<h1>Hate Crimes across NYS Counties</h1>"],
+        [f'''<a href="HTML/{kemalOSIS}.html">General Trends and Analysis of Hate Crimes in the US</a>'''],
+        [f'''<a href="HTML/{emmaOSIS}.html">EMMA TEXT</a>'''],
+        [f'''<a href="HTML/{stellaOSIS}.html">STELLA TEXT</a>''']]))
 
 #Write to the files:
-writePage(f"HTML/{kemalOsis}.html",makePage(head = {"title": "General Trends and Analysis of Hate Crimes in the US",
+writePage(f"HTML/{kemalOSIS}.html",makePage(head = {"title": "General Trends and Analysis of Hate Crimes in the US",
     "description": "A graph showing the trends and analysis of hate crimes in the US.",
     "keywords": "data, python, hate crimes, analysis, trends, matplotlib, graph",
     "author": "Kemal Cater"},
-    body = [["<h1>General Trends and Analysis of Hate Crimes in the US</h1>"],
+    body = [[[navbar().replace("HTML/", "")][0].replace("../","")],
+        ["<h1>General Trends and Analysis of Hate Crimes in the US</h1>"],
         ["<img src='IMG/incidentsPerYearGraph.png' alt='Graph of Hate Crimes in the US'>"],]))
-writePage(f"HTML/{emmaosis}.html", makePage())
-writePage(f"HTML/{stellaOSIS}.html", makePage())
+writePage(f"HTML/{emmaOSIS}.html", makePage())
+#writePage(f"HTML/{stellaOSIS}.html", makePage())
