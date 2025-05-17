@@ -37,22 +37,22 @@ def makeHeader(h,num):
 
 #Function to make a Paragraph in HTML website
 def makeParagraph(p):
-	global indent
-	return indent + "<p>"+str(p)+"</p>\n"
+    global indent
+    return indent + "<p>"+str(p)+"</p>\n"
 
 
 def navbar():
-	nav = f'''
-	<nav>
-  	<ol>
-    	<li><a href="../data.py">Home Page</a></li>
-    	<li><a href="HTML/{kemalOSIS}.html">Hate Crimes through the years</a></li>
-    	<li><a href="HTML/{emmaOSIS}.html">Race</a></li>
-    	<li><a href="HTML/{stellaOSIS}.html">Religion</a></li>
-  	</ol>
-	</nav>
-	'''
-	return nav.strip()
+    nav = f'''
+    <nav>
+    <ol>
+        <li><a href="../data.py">Home Page</a></li>
+        <li><a href="HTML/{kemalOSIS}.html">Hate Crimes through the years</a></li>
+        <li><a href="HTML/{emmaOSIS}.html">Race</a></li>
+        <li><a href="HTML/{stellaOSIS}.html">Religion</a></li>
+      </ol>
+    </nav>
+    '''
+    return nav.strip()
 
 #readCSV(path, rotate) -> list
 #path -> string
@@ -294,12 +294,9 @@ def hatecrime_data():
         rows = data.split("\n")
         dataList = [row.split(',') for row in rows if row]
     return dataList'''
-
-#This function generates the pie chart for my website
 def religionGraph():
     data = dataList[0]
     mylabels = data[15:23]
-    data_list = dataList
     jewish = 0
     catholic = 0
     protestant = 0
@@ -308,7 +305,7 @@ def religionGraph():
     atheism = 0
     religion = 0
     other = 0
-    for row in data_list[1:]:
+    for row in dataList[1:]:
         jewish += int(row[15])
         catholic += int(row[16])
         protestant += int(row[17])
@@ -333,16 +330,20 @@ def religionGraph():
     plt.title('Hate Crimes in New York State By Religion')
     plt.savefig("IMG/ReligionPlot.png")
 
+#hatecrime_data()
+religionGraph()
+
+
 def genReligionBody():
 	body = makeHeader("Correlation Between Religion, in Hate Crime Statistics", 1)
-	body += makeParagraph("This shows how in New York State there is an issue with anti-semitism")
-	body +='''	<img src="../IMG/ReligionPlot.png" alt="Religion">'''
+	body += makeParagraph("This shows how in New York State there is an issue with anti-semitism ")
+	body += indent*2 + '''<img src="IMG/ReligionPlot.png" alt="Religion">'''
+	body =  body.strip()
 	return body
 
 religionGraph()
 
 religionpage = site.replace("?TITLE?", "The Corrolation Between Hate Crimes and Religion")
-religionpage = religionpage.replace("?STYLE?", '<link rel="stylesheet" href="CSS/PokeStyle.css">')
 religionpage = religionpage.replace("?BODY?", genReligionBody())
 f = open(f"HTML/{stellaOSIS}.html", "w")
 f.write(religionpage)
