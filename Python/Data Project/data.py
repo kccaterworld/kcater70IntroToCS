@@ -24,6 +24,7 @@ site = '''<!DOCTYPE html>
         <meta name="viewport" content="width=device-width, initial-scale=1">  
     </head>
     <body>
+        ?NAV?
         ?BODY?
     </body>
 </html>'''
@@ -118,13 +119,14 @@ def freqYears(data):
 #head should be a dict of a certain shape, with the keys "title", "description", "keywords", and "author".
 #body should be a list of strings, which will be the body of the HTML page.
 #Each string in body should be a valid HTML element.
-def makePage(head:dict = {"title": "title",
+def makePage(head:dict = {"title": "Title",
                           "description": "description",
                           "keywords": "keywords",
-                          "author": "author"},
+                          "author": "author",
+                          "stylesheet": "style.css"},
              body:list = ["<p> Body Element 1</p>", "<p> Body Element 2</p>"]) -> str:
     headContent = f'''<title>{head["title"]}</title>
-        <link rel="stylesheet" href="CSS/DPStyle.css">
+        <link rel="stylesheet" href="{head["stylesheet"]}">
         <meta name="description" content="{head["description"]}">
         <meta name="keywords" content="{head["keywords"]}">
         <meta name="author" content="{head["author"]}">
@@ -230,7 +232,6 @@ plt.savefig("IMG/incidentsPerYearGraph.png")
 plt.clf()
 
 
-
 ###########################################################################################################################
 # E. Ching - Bar graph illustrating hate crimes based on race
 ###########################################################################################################################
@@ -268,7 +269,7 @@ def race():
 race()
 
 # Build HTML content
-site = site.replace("?NAV?", navbar())
+site = site.replace("?NAV?", navbar().replace("HTML/", ""))
 site = site.replace("?STYLE?", "http://marge.stuy.edu/~eching70/DataProject/CSS/DPStyle.css")
 race_page = site.replace("?TITLE?", "Race")
 
@@ -278,22 +279,13 @@ body += indent * 2 + "<img src='../IMG/bar_race.png' alt='race plot'>\n"
 body += makeParagraph("hi")
 body = body.strip()
 race_page = race_page.replace("?BODY?", body)
-w = open("HTML/227178217.html", "w")
-w.write(race_page)
-w.close()
+writePage(f"HTML/{emmaOSIS}.html", race_page)
+
 
 ###########################################################################################################################
 # S. Kubersky - Pie graph illustrating trends of religion based hate crimes
 ###########################################################################################################################
 
-'''#Function to make the list of all the data
-def hatecrime_data():
-    dataList = []
-    with open('hatecrimes.csv') as text:
-        data = text.read()
-        rows = data.split("\n")
-        dataList = [row.split(',') for row in rows if row]
-    return dataList'''
 def religionGraph():
     data = dataList[0]
     mylabels = data[15:23]
@@ -330,43 +322,41 @@ def religionGraph():
     plt.title('Hate Crimes in New York State By Religion')
     plt.savefig("IMG/ReligionPlot.png")
 
-#hatecrime_data()
 religionGraph()
-
 
 def genReligionBody():
 	body = makeHeader("Correlation Between Religion, in Hate Crime Statistics", 1)
 	body += makeParagraph("This shows how in New York State there is an issue with anti-semitism ")
-	body += indent*2 + '''<img src="IMG/ReligionPlot.png" alt="Religion">'''
+	body += indent*2 + '''<img src="../IMG/ReligionPlot.png" alt="Religion">'''
 	body =  body.strip()
 	return body
 
 religionGraph()
 
 religionpage = site.replace("?TITLE?", "The Corrolation Between Hate Crimes and Religion")
+religionpage = religionpage.replace("?NAV?", navbar().replace("HTML/", ""))
 religionpage = religionpage.replace("?BODY?", genReligionBody())
-f = open(f"HTML/{stellaOSIS}.html", "w")
-f.write(religionpage)
-f.close()
+writePage(f"HTML/{stellaOSIS}.html", religionpage)
 
 
 #Print home page
 print(makePage(head = {"title": "Hate Crimes in the US",
     "description": "A website exploring hate crimes in the US from 2010 to 2022.",
     "keywords": "data, python, hate crimes, analysis, trends, matplotlib, graph",
-    "author": ""},
-    body = ["<h1>Hate Crimes across NYS Counties</h1>",
+    "author": "",
+    "stylesheet": "CSS/DPStyle.css"},
+    body = [navbar().replace("../", ""),
+        "<h1>Hate Crimes across NYS Counties</h1>",
         f'''<a href="HTML/{kemalOSIS}.html">General Trends and Analysis of Hate Crimes in the US</a>''',
         f'''<a href="HTML/{emmaOSIS}.html">EMMA TEXT</a>''',
-        f'''<a href="HTML/{stellaOSIS}.html">STELLA TEXT</a>''']).replace("../",""))
+        f'''<a href="HTML/{stellaOSIS}.html">STELLA TEXT</a>''']))
 
 #Write to the files:
 writePage(f"HTML/{kemalOSIS}.html",makePage(head = {"title": "General Trends and Analysis of Hate Crimes in the US",
     "description": "A graph showing the trends and analysis of hate crimes in the US.",
     "keywords": "data, python, hate crimes, analysis, trends, matplotlib, graph",
-    "author": "Kemal Cater"},
-    body = [[navbar().replace("HTML/", "")][0].replace("../",""),
+    "author": "Kemal Cater",
+    "stylesheet": "../CSS/DPStyle.css"},
+    body = [navbar().replace("HTML/", ""),
         "<h1>General Trends and Analysis of Hate Crimes in the US</h1>",
         "<img src='../IMG/incidentsPerYearGraph.png' alt='Graph of Hate Crimes in the US'>"]))
-#writePage(f"HTML/{emmaOSIS}.html", makePage())
-#writePage(f"HTML/{stellaOSIS}.html", makePage())
