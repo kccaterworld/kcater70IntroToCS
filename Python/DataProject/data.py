@@ -347,9 +347,9 @@ print(makePage(head = {"title": "Hate Crimes in the US",
     "stylesheet": "CSS/DPStyle.css"},
     body = [navbar().replace("../", ""),
         "<h1>Hate Crimes across NYS Counties</h1>",
-        f'''<a href="HTML/{kemalOSIS}.html">General Trends and Analysis of Hate Crimes in the US</a>''',
-        f'''<a href="HTML/{emmaOSIS}.html">EMMA TEXT</a>''',
-        f'''<a href="HTML/{stellaOSIS}.html">STELLA TEXT</a>''']))
+        f'''<p><a href="HTML/{kemalOSIS}.html">General Trends and Analysis of Hate Crimes in the US</a></p>''',
+        f'''<p><a href="HTML/{emmaOSIS}.html">Hate Crimes Based On Race</a></p>''',
+        f'''<p><a href="HTML/{stellaOSIS}.html">Trends Of Religion Based Hate Crimes</a></p>''']))
 
 #Write to the files:
 writePage(f"HTML/{kemalOSIS}.html",makePage(head = {"title": "General Trends and Analysis of Hate Crimes in the US",
