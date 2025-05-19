@@ -4,6 +4,8 @@ print("Content-Type: text/html\n\n")
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
 import random
+import cgitb
+cgitb.enable() 
 
 
 #Globals
@@ -276,7 +278,7 @@ race_page = site.replace("?TITLE?", "Race")
 body = makeHeader("Correlation between Race and Crime", 1)
 body += makeParagraph("Hate crimes based on race have and continue to reflect racism, implicit bias, and social tensions that disproportionately target certain groups. This graph illustrates reported hate crimes in New York from 2010 to 2022, broken down by race.")
 body += indent * 2 + "<img src='../IMG/bar_race.png' alt='race plot'>\n"
-body += makeParagraph("hi")
+body += makeParagraph("The data reveal that anti-Black hate crimes are reported most frequently, occurring almost four times more often than those targeting any other group. This underscores the persistent and systemic nature of anti-Black racism. Anti-Asian and anti-White crimes are reported at roughly the same frequency, while crimes against Native, Pacific Islander, and multiracial individuals are almost negligible in comparison. However, it is important to consider the impact of underreporting and uneven population distribution. For example, in New York State, only 1.1% of the population identifies as American Indian or Alaska Native, and just 0.1% as Native Hawaiian or Pacific Islander.")
 body = body.strip()
 race_page = race_page.replace("?BODY?", body)
 writePage(f"HTML/{emmaOSIS}.html", race_page)
@@ -347,6 +349,8 @@ print(makePage(head = {"title": "Hate Crimes in the US",
     "stylesheet": "CSS/DPStyle.css"},
     body = [navbar().replace("../", ""),
         "<h1>Hate Crimes across NYS Counties</h1>",
+        "<p>The “Hate Crimes by County and Bias Type: Beginning 2010” dataset is provided by the New York State Division of Criminal Justice Services (DCJS), and offers a detailed record of reported hate crime incidents across New York State. Compiled under the guidelines of New York's Hate Crime Law (Penal Law Article 485), they offer insight on hate crime based on race, religion, sexual orientation, gender, age, or disability. All information is submitted to the FBI'S Uniform Crime Reporting Program and distributed to the public, like it is here.</p>",
+        '''<a href="data.ny.gov/Public-Safety/Hate-Crimes-by-County-and-Bias-Type-Beginning-2010/6xda-q7ev/about_data" target="_blank">New York State Division of Criminal Justice Services. Hate Crimes by County and Bias Type: Beginning 2010 | State of New York. 5 Feb. 2025, data.ny.gov/Public-Safety/Hate-Crimes-by-County-and-Bias-Type-Beginning-2010/6xda-q7ev/about_data</a>''',
         f'''<p><a href="HTML/{kemalOSIS}.html">General Trends and Analysis of Hate Crimes in the US</a></p>''',
         f'''<p><a href="HTML/{emmaOSIS}.html">Hate Crimes Based On Race</a></p>''',
         f'''<p><a href="HTML/{stellaOSIS}.html">Trends Of Religion Based Hate Crimes</a></p>''']))
