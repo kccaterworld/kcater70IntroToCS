@@ -12,9 +12,9 @@ lineBreak = "\n<br>"
 newLine = '''
 '''
 yearFreq = {}
-kemalOSIS = "235824331"
-emmaOSIS = "227178217"
-stellaOSIS = "239363948"
+kemalOSIS = "kcater70"
+emmaOSIS = "eching70"
+stellaOSIS = "skubersky70"
 #Multiline for HTML Webpages, it gets replaced by the actual content by certain functions
 site = '''<!DOCTYPE html>
 <html>
