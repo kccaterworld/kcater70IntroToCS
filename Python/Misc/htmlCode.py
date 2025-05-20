@@ -176,40 +176,70 @@ def buildList(title,items,type):
 
 #genPageHead() -> string
 def genPageHead():
-    pageHead = ""
+    pageHead= []
     #Example of how to add to pageHead
-    pageHead += ""
+    pageHead.append("")
     #Example title and CSS commands (IMPORTANT)
-    pageHead += genTitle("Example Title")
+    pageHead.append(genTitle("Example Title"))
     #Adding meta tags (IMPORTANT)
-    pageHead += indent + newLine + buildMeta("UFT-8","Example Description","Example Keywords","Example Author","width=device-width, initial-scale=1.0",)
+    pageHead.append(indent + newLine + buildMeta("UFT-8","Example Description","Example Keywords","Example Author","width=device-width, initial-scale=1.0",))
     #Adding links (IMPORTANT)
-    pageHead += indent + newLine + buildHeadLinks("stylesheet","text/css","style.css")
-    pageHead += indent + newLine + buildHeadLinks("icon","image/x-icon","favicon.ico")    
+    pageHead.append(indent + newLine + buildHeadLinks("stylesheet","text/css","style.css"))
+    pageHead.append(indent + newLine + buildHeadLinks("icon","image/x-icon","favicon.ico"))
     return pageHead
 
 #genPageBody() -> string
 def genPageBody():
-    pageBody = ""
+    pageBody = []
     #Example of how to add to pageBody (include newLine)
-    pageBody += ""
+    pageBody.append("")
     #Example Header
-    pageBody += buildHeader("h1","Example Header!")
-    pageBody += buildLink("youtube.com","Youtube",True)
+    pageBody.append(buildHeader("h1","Example Header!"))
+    pageBody.append(buildLink("youtube.com","Youtube",True))
     #Example Paragraph
-    pageBody += newLine + buildPara("HIIIIIII")
+    pageBody.append(buildPara("HIIIIIII"))
     #Example table of how rows and collumns work in each section. (SECTION)(ROWNUM)(COLNUM) SECTION: [H(header),B(body),F(footer)]
-    pageBody += newLine + buildTable("Example Table",[["HR1C1","HR1C2"],["HR2C1","HR2C2"]],[["BR1C1","BR1C2"],["BR2C1","BR2C2"]],[["FR1C1","FR1C2"],["FR2C1","FR2C2"]])
+    pageBody.append(buildTable("Example Table",[["HR1C1","HR1C2"],["HR2C1","HR2C2"]],[["BR1C1","BR1C2"],["BR2C1","BR2C2"]],[["FR1C1","FR1C2"],["FR2C1","FR2C2"]]))
     #Example lists
-    pageBody += buildList("Example Ordered List",["First","Second","Third"],"ol")
-    pageBody += newLine + buildList("Example Unordered List",["Item","Item","Item"],"ul")
+    pageBody.append(buildList("Example Ordered List",["First","Second","Third"],"ol"))
+    pageBody.append(buildList("Example Unordered List",["Item","Item","Item"],"ul"))
     return pageBody
 
-def genPage():
-    MPage = pageMultiline.replace("_HEAD_",genPageHead())
-    MPage = MPage.replace("_BODY_",genPageBody())
-    return MPage
+#makePage(head, body) -> str
+#head -> dict
+#body -> list
+#head should be a dict of a certain shape, with the keys "title", "description", "keywords", and "author".
+#body should be a list of strings, which will be the body of the HTML page.
+#Each string in body should be a valid HTML element.
+def makePage(head:dict = {"title": "Title",
+                          "description": "description",
+                          "keywords": "keywords",
+                          "author": "author",
+                          "stylesheet": "style.css"},
+             body:list = ["<p> Body Element 1</p>", "<p> Body Element 2</p>"]) -> str:
+    headContent = f'''<title>{head["title"]}</title>
+        <link rel="stylesheet" href="{head["stylesheet"]}">
+        <meta name="description" content="{head["description"]}">
+        <meta name="keywords" content="{head["keywords"]}">
+        <meta name="author" content="{head["author"]}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">'''
+    bodyContent = "".join([element  + "\n\t\t" for element in body])
+    return f'''<!DOCTYPE html>
+<html>
+    <head>
+        {headContent}
+    </head>
+    <body>
+        {bodyContent}
+    </body>
+</html>'''
 
-
-
-print(genPage())
+#writePage(path, content) -> None
+#page -> string
+#content -> string
+#Writes the content to the specified path, creating a new file if it doesn't exist.
+#If the file already exists, it will be overwritten.
+def writePage(path, content):
+    with open(path, "w") as file:
+        file.write(content)
