@@ -40,19 +40,16 @@ def stripInner(text,item):
 #makehead(title,css) -> string
 #title -> string
 #css -> list of lists, optimized for buildCSSBlock()
-def titleCSS(title):
-    titleCSSMultiline = f'''
-    \t<title> {title} </title>
-    \t<style> _CSS_ </style>
-    '''
-    titleCSSMultiline = titleCSSMultiline.replace("_CSS_",buildCSSFull())
-    return titleCSSMultiline
+def genTitle(title):
+    return f'''\n\t<title> {title} </title>'''
 
-#buildCSSFull() -> string
-def buildCSSFull():
-    cssFull = ""
-    cssFull += buildCSSBlock("Example Tag",["Example Property"],["Example Value"])
-    return cssFull
+
+def buildMeta(charset,description,keywords,author,viewport):
+   return f'''\t<meta charset="{charset}">
+    \t<meta name="description" content="{description}">
+    \t<meta name="keywords" content="{keywords}">
+    \t<meta name="author" content="{author}">
+    \t<meta name="viewport" content="{viewport}">'''
 
 #buildCSSBlock(cssElement,cssProperty,cssValue) -> string
 #cssElement -> string
@@ -72,13 +69,11 @@ def buildCSSBlock(cssElement,cssProperty,cssValue):
     cssMultiline = cssMultiline.replace("_PROPERTIES_",properties)
     return cssMultiline
 
-
-def buildMeta(charset,description,keywords,author,viewport):
-   return f'''\t<meta charset="{charset}">
-    \t<meta name="description" content="{description}">
-    \t<meta name="keywords" content="{keywords}">
-    \t<meta name="author" content="{author}">
-    \t<meta name="viewport" content="{viewport}">'''
+#buildCSSFull() -> string
+def buildCSSFull():
+    cssFull = ""
+    cssFull += buildCSSBlock("Example Tag",["Example Property"],["Example Value"])
+    return cssFull
 
 
 def buildHeadLinks(rel,type,href):
@@ -92,6 +87,12 @@ def buildHeadLinks(rel,type,href):
 def buildHeader(tag,content):
     return f'''\t<{tag}> {str(content)} </{tag}>'''
 
+#buildPara(text) -> string
+#text -> string
+#Generates an HTML paragraph with conents text
+def buildPara(text):
+    return f"\n\t<p> {str(text)} </p>" 
+
 
 def buildLink(ref,content,newTab: bool):
     if newTab == True:
@@ -101,12 +102,6 @@ def buildLink(ref,content,newTab: bool):
     else:
         nT = ''''''
     return f'''\n\t<a href="https://www.{ref}" {nT}> {content} </a>'''
-
-#buildPara(text) -> string
-#text -> string
-#Generates an HTML paragraph with conents text
-def buildPara(text):
-    return f"\n\t<p> {str(text)} </p>" 
 
 #buildTable(caption,header,body,footer) -> string
 #caption -> string
@@ -185,7 +180,7 @@ def genPageHead():
     #Example of how to add to pageHead
     pageHead += ""
     #Example title and CSS commands (IMPORTANT)
-    pageHead += titleCSS("Example Title","ExampleCSS")
+    pageHead += genTitle("Example Title")
     #Adding meta tags (IMPORTANT)
     pageHead += indent + newLine + buildMeta("UFT-8","Example Description","Example Keywords","Example Author","width=device-width, initial-scale=1.0",)
     #Adding links (IMPORTANT)
@@ -214,5 +209,7 @@ def genPage():
     MPage = pageMultiline.replace("_HEAD_",genPageHead())
     MPage = MPage.replace("_BODY_",genPageBody())
     return MPage
+
+
 
 print(genPage())
