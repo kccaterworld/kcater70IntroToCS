@@ -176,17 +176,38 @@ def buildList(title,items,type):
 
 #genPageHead() -> string
 def genPageHead():
-    pageHead= []
+    pageHeadDict = {"title": "Example Title",
+     "description": "description",
+     "keywords": "keywords",
+     "author": "author",
+     "charset": "UTF-8",
+     "viewport": "width=device-width, initial-scale=1.0",
+     "stylesheet": "style.css",
+     "extras": [""]}
     #Example of how to add to pageHead
-    pageHead.append("")
-    #Example title and CSS commands (IMPORTANT)
-    pageHead.append(genTitle("Example Title"))
-    #Adding meta tags (IMPORTANT)
-    pageHead.append(indent + newLine + buildMeta("UFT-8","Example Description","Example Keywords","Example Author","width=device-width, initial-scale=1.0",))
+    pageHeadDict["extras"].append("")
+    pageHeadDict["extras"].append(indent + newLine + buildMeta("UFT-8","Example Description","Example Keywords","Example Author","width=device-width, initial-scale=1.0",))
     #Adding links (IMPORTANT)
-    pageHead.append(indent + newLine + buildHeadLinks("stylesheet","text/css","style.css"))
-    pageHead.append(indent + newLine + buildHeadLinks("icon","image/x-icon","favicon.ico"))
-    return pageHead
+    pageHeadDict["extras"].append(indent + newLine + buildHeadLinks("stylesheet","text/css","style.css"))
+    pageHeadDict["extras"].append(indent + newLine + buildHeadLinks("icon","image/x-icon","favicon.ico"))
+    return pageHeadDict
+
+def genHTMLHead(title = "Title",
+                description = "description",
+                keywords = "keywords",
+                author = "author",
+                charset = "UTF-8",
+                viewport = "width=device-width, initial-scale=1.0",
+                stylesheet = "style.css",
+                extras = (any)):
+    return f'''<title>{title}</title>
+        <link rel="stylesheet" href="{stylesheet}">
+        <meta name="description" content="{description}">
+        <meta name="keywords" content="{keywords}">
+        <meta name="author" content="{author}">
+        <meta charset="{charset}">
+        <meta name="viewport" content="{viewport}">
+        {[line + "\n\t" for line in extras]}'''
 
 #genPageBody() -> string
 def genPageBody():
@@ -215,15 +236,20 @@ def makePage(head:dict = {"title": "Title",
                           "description": "description",
                           "keywords": "keywords",
                           "author": "author",
-                          "stylesheet": "style.css"},
-             body:list = ["<p> Body Element 1</p>", "<p> Body Element 2</p>"]) -> str:
+                          "charset": "UTF-8",
+                          "viewport": "width=device-width, initial-scale=1.0",
+                          "stylesheet": "style.css",
+                          "extras": [""]},
+    body:list = ["<p> Body Element 1</p>", "<p> Body Element 2</p>"]) -> str:
     headContent = f'''<title>{head["title"]}</title>
         <link rel="stylesheet" href="{head["stylesheet"]}">
         <meta name="description" content="{head["description"]}">
         <meta name="keywords" content="{head["keywords"]}">
         <meta name="author" content="{head["author"]}">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">'''
+        <meta charset="{head["charset"]}">
+        <meta name="viewport" content="{head["viewport"]}">'''
+    for extraVal in head["extras"]:
+        headContent += extraVal
     bodyContent = "".join([element  + "\n\t\t" for element in body])
     return f'''<!DOCTYPE html>
 <html>
