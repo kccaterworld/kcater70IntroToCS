@@ -165,6 +165,49 @@ def buildTable(caption: str = "Table",
             </tfoot>
         </table>\n'''
 
+#buildTableArch(caption,header,body,footer) -> string
+#caption -> string
+#header -> list of lists
+#body -> list of lists
+#footer -> list of lists
+#An archaic version of buildTable, kept because it's the one that works lol
+#Creates HTML table with caption Caption, using header, body, and footer as such.
+#header, body, footer: main list is all data, each inner list is a row, each list value is a collumn for that row
+def buildTableArch(caption: str = "Table",
+               header:list[list[str]] = [[""],[""]],
+               body:list[list[str]] = [[""],[""]],
+               footer:list[list[str]] = [[""],[""]]):
+            multHead = ""
+            multBody = ""
+            multFoot = ""
+            for item in header:
+                multHead += "\t<tr>"
+                for cell in item:
+                    multHead += "<th>" + str(cell) + "</th>"
+                multHead += "</tr>"
+            for item in body:
+                multBody += "\t<tr>"
+                for cell in item:
+                    multBody += "<td>" + str(cell) + "</td>"
+                multBody += "</tr>"
+            for item in footer:
+                multFoot += "\t<tr>"
+                for cell in item:
+                    multFoot += "<td>" + str(cell) + "</td>"
+                multFoot += "</tr>"
+            return f'''\n\t<table>
+            <caption> {caption} </caption>
+            <thead>
+                {multHead}
+            </thead>
+            <tbody>
+                {multBody}
+            </tbody>
+            <tfoot>
+                {multFoot}
+            </tfoot>
+        </table>\n'''
+
 #randomTableOfRandomness(rows,collumns) -> list
 #rows -> int
 #collumns -> int
