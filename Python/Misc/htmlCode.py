@@ -37,13 +37,18 @@ def stripInner(text,item):
             data.remove(thing)
     return " ".join(data)
 
-#makehead(title,css) -> string
+#genTitle(title) -> string
 #title -> string
-#css -> list of lists, optimized for buildCSSBlock()
 def genTitle(title):
     return f'''\n\t<title> {title} </title>'''
 
-
+#buildMeta(charset,description,keywords,author,viewport) -> string
+#charset -> string
+#description -> string
+#keywords -> string
+#author -> string
+#viewport -> string
+#Creates a meta tag for the HTML page, with the specified charset, description, keywords, author, and viewport.
 def buildMeta(charset,description,keywords,author,viewport):
    return f'''\t<meta charset="{charset}">
     \t<meta name="description" content="{description}">
@@ -75,7 +80,13 @@ def buildCSSFull():
     cssFull += buildCSSBlock("Example Tag",["Example Property"],["Example Value"])
     return cssFull
 
-
+#buildHeadLinks(rel,type,href) -> string
+#rel -> string
+#type -> string
+#href -> string
+#Creates a link tag for the HTML page, with the specified rel, type, and href.
+#rel: stylesheet, icon, etc.
+#type: text/css, image/x-icon, etc.
 def buildHeadLinks(rel,type,href):
     return f'''\t<link rel="{rel}" type="{type}" href="{href}">'''
 
@@ -93,14 +104,18 @@ def buildHeader(tag,content):
 def buildPara(text):
     return f"\n\t<p> {str(text)} </p>" 
 
-
-def buildLink(ref,content,newTab: bool):
+#buildLink(ref,content,newTab) -> string
+#ref -> string
+#content -> string
+#newTab -> bool
+#Creates a link tag for the HTML page, with the specified ref, content, and newTab.
+#ref: the link to go to, content: the text to display, newTab: whether to open in a new tab or not
+#newTab: True = new tab, False = same tab, None = same tab
+def buildLink(ref,content,newTab: bool = False):
     if newTab == True:
         nT = '''target="_blank"'''
-    elif newTab == False:
-        nT = ''''''
     else:
-        nT = ''''''
+        nT = ""
     return f'''\n\t<a href="https://www.{ref}" {nT}> {content} </a>'''
 
 #buildTable(caption,header,body,footer) -> string
@@ -175,39 +190,17 @@ def buildList(title,items,type):
     return list
 
 #genPageHead() -> string
+#Creates the head of the HTML page, including title, CSS, meta tags, and links.
 def genPageHead():
-    pageHeadDict = {"title": "Example Title",
-     "description": "description",
-     "keywords": "keywords",
-     "author": "author",
-     "charset": "UTF-8",
-     "viewport": "width=device-width, initial-scale=1.0",
-     "stylesheet": "style.css",
-     "extras": [""]}
-    #Example of how to add to pageHead
-    pageHeadDict["extras"].append("")
-    pageHeadDict["extras"].append(indent + newLine + buildMeta("UFT-8","Example Description","Example Keywords","Example Author","width=device-width, initial-scale=1.0",))
+    pageHead  = []
+    #Example title and CSS commands (IMPORTANT)
+    pageHead.append(genTitle("Example Title"))
+    #Adding meta tags (IMPORTANT)
+    pageHead.append(buildMeta("UFT-8","Example Description","Example Keywords","Example Author","width=device-width, initial-scale=1.0",))
     #Adding links (IMPORTANT)
-    pageHeadDict["extras"].append(indent + newLine + buildHeadLinks("stylesheet","text/css","style.css"))
-    pageHeadDict["extras"].append(indent + newLine + buildHeadLinks("icon","image/x-icon","favicon.ico"))
-    return pageHeadDict
-
-def genHTMLHead(title = "Title",
-                description = "description",
-                keywords = "keywords",
-                author = "author",
-                charset = "UTF-8",
-                viewport = "width=device-width, initial-scale=1.0",
-                stylesheet = "style.css",
-                extras = (any)):
-    return f'''<title>{title}</title>
-        <link rel="stylesheet" href="{stylesheet}">
-        <meta name="description" content="{description}">
-        <meta name="keywords" content="{keywords}">
-        <meta name="author" content="{author}">
-        <meta charset="{charset}">
-        <meta name="viewport" content="{viewport}">
-        {[line + "\n\t" for line in extras]}'''
+    pageHead.append(buildHeadLinks("stylesheet","text/css","style.css"))
+    pageHead.append(buildHeadLinks("icon","image/x-icon","favicon.ico"))
+    return pageHead
 
 #genPageBody() -> string
 def genPageBody():
@@ -220,7 +213,12 @@ def genPageBody():
     #Example Paragraph
     pageBody.append(buildPara("HIIIIIII"))
     #Example table of how rows and collumns work in each section. (SECTION)(ROWNUM)(COLNUM) SECTION: [H(header),B(body),F(footer)]
-    pageBody.append(buildTable("Example Table",[["HR1C1","HR1C2"],["HR2C1","HR2C2"]],[["BR1C1","BR1C2"],["BR2C1","BR2C2"]],[["FR1C1","FR1C2"],["FR2C1","FR2C2"]]))
+    pageBody.append(buildTable("Example Table",[["HR1C1","HR1C2"],
+                                                ["HR2C1","HR2C2"]],
+                                               [["BR1C1","BR1C2"],
+                                                ["BR2C1","BR2C2"]],
+                                               [["FR1C1","FR1C2"],
+                                                ["FR2C1","FR2C2"]]))
     #Example lists
     pageBody.append(buildList("Example Ordered List",["First","Second","Third"],"ol"))
     pageBody.append(buildList("Example Unordered List",["Item","Item","Item"],"ul"))
@@ -232,24 +230,9 @@ def genPageBody():
 #head should be a dict of a certain shape, with the keys "title", "description", "keywords", and "author".
 #body should be a list of strings, which will be the body of the HTML page.
 #Each string in body should be a valid HTML element.
-def makePage(head:dict = {"title": "Title",
-                          "description": "description",
-                          "keywords": "keywords",
-                          "author": "author",
-                          "charset": "UTF-8",
-                          "viewport": "width=device-width, initial-scale=1.0",
-                          "stylesheet": "style.css",
-                          "extras": [""]},
-    body:list = ["<p> Body Element 1</p>", "<p> Body Element 2</p>"]) -> str:
-    headContent = f'''<title>{head["title"]}</title>
-        <link rel="stylesheet" href="{head["stylesheet"]}">
-        <meta name="description" content="{head["description"]}">
-        <meta name="keywords" content="{head["keywords"]}">
-        <meta name="author" content="{head["author"]}">
-        <meta charset="{head["charset"]}">
-        <meta name="viewport" content="{head["viewport"]}">'''
-    for extraVal in head["extras"]:
-        headContent += extraVal
+def makePage(head:list = genPageHead(),
+    body:list = genPageBody()) -> str:
+    headContent = "".join([element  + "\n\t\t" for element in head])
     bodyContent = "".join([element  + "\n\t\t" for element in body])
     return f'''<!DOCTYPE html>
 <html>
@@ -260,6 +243,17 @@ def makePage(head:dict = {"title": "Title",
         {bodyContent}
     </body>
 </html>'''
+
+
+#genPage() -> string
+#Creates the entire HTML page, including head and body.
+#This is the main function that will be called to generate the page.
+def genPage():
+    MPage = pageMultiline.replace("_HEAD_",genPageHead())
+    MPage = MPage.replace("_BODY_",genPageBody())
+    return MPage
+
+
 
 #writePage(path, content) -> None
 #page -> string

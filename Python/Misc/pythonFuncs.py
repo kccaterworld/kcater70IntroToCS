@@ -20,16 +20,14 @@ lineBreak = "\n<br>"
 newLine = '''
 '''
 #Multiline for HTML Webpages, it gets replaced by the actual content by certain functions
-pageMultiline = '''
-<!DOCTYPE html>
+pageMultiline = '''<!DOCTYPE html>
 <html>
     <head> _HEAD_
     </head>
     <body>
     _BODY_
     </body>
-</html>
-'''
+</html>'''
 
 #An alphabetically sorted list of every color from the turtle module
 #Requires turtlecolors.csv to be in the same directory as Python file
@@ -265,192 +263,6 @@ def stripInner(text: str = "",
         while thing in data:
             data.remove(thing)
     return " ".join(data)
-
-
-#HTML/CSS helper functions
-
-#makeHead(title) -> string
-#title -> string
-#css -> list of lists, optimized for buildCSSBlock()
-def titleCSS(title:str = "Title"):
-    titleCSSMultiline = f'''
-    \t<title> {title} </title>
-    \t<style> _CSS_ </style>
-    '''
-    titleCSSMultiline = titleCSSMultiline.replace("_CSS_",buildCSSFull())
-    return titleCSSMultiline
-
-#buildCSSBlock(cssElement,cssProperty,cssValue) -> string
-#cssElement -> string
-#cssProperty -> string
-#cssValue -> string
-#Creates a CSS block for element(s) cssElement, with respective properties and values.
-#If inputs are invalid it will not render
-def buildCSSBlock(cssElement: str = "Example Tag",
-                  cssProperty: list = ["Example Property"],
-                  cssValue: list = ["Example Value"]):
-    cssMultiline = '''_ELEMENT_ {
-        _PROPERTIES_
-	}
-	'''
-    properties = ""
-    cssMultiline = cssMultiline.replace("_ELEMENT_",cssElement)
-    for i in range(len(cssProperty)):
-        properties += f"    " + cssProperty[i] + ":" + cssValue[i] + ";"
-    cssMultiline = cssMultiline.replace("_PROPERTIES_",properties)
-    return cssMultiline
-
-#buildCSSFull() -> string
-def buildCSSFull():
-    cssFull = ""
-    cssFull += buildCSSBlock("Example Tag",["Example Property"],["Example Value"])
-    return cssFull
-
-#buildMeta(charset,description,keywords,author,viewport) -> string
-#charset -> string
-#description -> string
-#keywords -> string
-#author -> string
-#viewport -> string
-#Creates a meta tag for the HTML page, with the specified charset, description, keywords, author, and viewport.
-def buildMeta(charset,description,keywords,author,viewport):
-   return f'''\t<meta charset="{charset}">
-    \t<meta name="description" content="{description}">
-    \t<meta name="keywords" content="{keywords}">
-    \t<meta name="author" content="{author}">
-    \t<meta name="viewport" content="{viewport}">'''
-
-#buildHeadLinks(rel,type,href) -> string
-#rel -> string
-#type -> string
-#href -> string
-#Creates a link tag for the HTML page, with the specified rel, type, and href.
-#rel: stylesheet, icon, etc.
-#type: text/css, image/x-icon, etc.
-def buildHeadLinks(rel,type,href):
-    return f'''\t<link rel="{rel}" type="{type}" href="{href}">'''
-
-#buildHeader(tag,content,*styles) -> string
-#tag -> string
-#content -> string
-#Generates a simple HTML block (generalized version of makePara)
-def buildHeader(tag,content):
-    return f'''\t<{tag}> {str(content)} </{tag}>'''
-
-#buildLink(ref,content,newTab) -> string
-#ref -> string
-#content -> string
-#newTab -> bool
-#Creates a link tag for the HTML page, with the specified ref, content, and newTab.
-#ref: the link to go to, content: the text to display, newTab: whether to open in a new tab or not
-#newTab: True = new tab, False = same tab, None = same tab
-def buildLink(ref,content,newTab: bool = False):
-    if newTab == True:
-        nT = '''target="_blank"'''
-    else:
-        nT = ""
-    return f'''\n\t<a href="https://www.{ref}" {nT}> {content} </a>'''
-
-#buildPara(text) -> string
-#text -> string
-#Generates an HTML paragraph with conents text
-def buildPara(text):
-    return f"\n\t<p> {str(text)} </p>" 
-
-#buildTable(caption,header,body,footer) -> string
-#caption -> string
-#header -> list of lists
-#body -> list of lists
-#footer -> list of lists
-#Creates HTML table with caption Caption, using header, body, and footer as such.
-#header, body, footer: main list is all data, each inner list is a row, each list value is a collumn for that row
-def buildTable(caption,header,body,footer):
-            tableMultiline = '''\n\t<table>
-            <caption> _CAPTION_ </caption>
-            <thead> _HEAD_
-            </thead>
-            <tbody> _BODY_
-            </tbody>
-            <tfoot> _FOOT_
-            </tfoot>
-        </table>\n'''
-            multHead = ""
-            multBody = ""
-            multFoot = ""
-            for item in header:
-                multHead += "\n\t\t<tr>"
-                for cell in item:
-                    multHead += "<th>" + str(cell) + "</th>"
-                multHead += "</tr>"
-            for item in body:
-                multBody += "\n\t\t<tr>"
-                for cell in item:
-                    multBody += "<td>" + str(cell) + "</td>"
-                multBody += "</tr>"
-            for item in footer:
-                multFoot += "\n\t\t<tr>"
-                for cell in item:
-                    multFoot += "<td>" + str(cell) + "</td>"
-                multFoot += "</tr>"
-            tableMultiline = tableMultiline.replace("_CAPTION_",caption)
-            tableMultiline = tableMultiline.replace("_HEAD_",multHead)
-            tableMultiline = tableMultiline.replace("_BODY_",multBody)
-            tableMultiline = tableMultiline.replace("_FOOT_",multFoot)
-            return tableMultiline
-
-#buildList(title,items,type) -> string
-#title -> string
-#items -> list
-#type -> string
-#creates HTML list of specified type using title Title, containing item list entries
-def buildList(title,items,type):
-    list = '\n\t<'+type+'> ' +  str(title)
-    for i in range(len(items)):
-        list += '\n\t    <li> ' + str(items[i]) + '</li>'
-    list += '\n\t</'+type+'>'
-    return list
-
-#genPageHead() -> string
-#Creates the head of the HTML page, including title, CSS, meta tags, and links.
-def genPageHead():
-    pageHead = ""
-    #Example of how to add to pageHead
-    pageHead += ""
-    #Example title and CSS commands (IMPORTANT)
-    pageHead += titleCSS("Example Title","ExampleCSS")
-    #Adding meta tags (IMPORTANT)
-    pageHead += indent + newLine + buildMeta("UFT-8","Example Description","Example Keywords","Example Author","width=device-width, initial-scale=1.0",)
-    #Adding links (IMPORTANT)
-    pageHead += indent + newLine + buildHeadLinks("stylesheet","text/css","style.css")
-    pageHead += indent + newLine + buildHeadLinks("icon","image/x-icon","favicon.ico")    
-    return pageHead
-
-#genPageBody() -> string
-#Creates the body of the HTML page, including headers, paragraphs, tables, and lists.
-def genPageBody():
-    pageBody = ""
-    #Example of how to add to pageBody (include newLine)
-    pageBody += ""
-    #Example Header
-    pageBody += buildHeader("h1","Example Header!")
-    pageBody += buildLink("youtube.com","Youtube",True)
-    #Example Paragraph
-    pageBody += newLine + buildPara("HIIIIIII")
-    #Example table of how rows and collumns work in each section. (SECTION)(ROWNUM)(COLNUM) SECTION: [H(header),B(body),F(footer)]
-    pageBody += newLine + buildTable("Example Table",[["HR1C1","HR1C2"],["HR2C1","HR2C2"]],[["BR1C1","BR1C2"],["BR2C1","BR2C2"]],[["FR1C1","FR1C2"],["FR2C1","FR2C2"]])
-    #Example lists
-    pageBody += buildList("Example Ordered List",["First","Second","Third"],"ol")
-    pageBody += newLine + buildList("Example Unordered List",["Item","Item","Item"],"ul")
-    return pageBody
-
-#genPage() -> string
-#Creates the entire HTML page, including head and body.
-#This is the main function that will be called to generate the page.
-def genPage():
-    MPage = pageMultiline.replace("_HEAD_",genPageHead())
-    MPage = MPage.replace("_BODY_",genPageBody())
-    return MPage
-
 
 #File I/O functions
 

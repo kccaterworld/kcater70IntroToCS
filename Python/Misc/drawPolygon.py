@@ -6,7 +6,7 @@ turtle.tracer(False)
 
 #Globals
 artist = turtle.Turtle()
-with open("code/Python/turtcolors.csv", "r") as colors:
+with open("turtcolors.csv", "r") as colors:
     colors = sorted(list({color for color in colors.read().split("\n")}),key=str.lower)
 
 #Helpers
