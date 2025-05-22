@@ -17,6 +17,14 @@ pageMultiline = '''
 </html>
 '''
 
+#condenseList(list) -> string
+#list -> list
+#Concatenes each item of a list into a single string
+def condenseList(list:list, newLine: bool = False):
+    condensedList = ""
+    for item in list:
+        condensedList += f"{item + f"{"\n" if newLine else ""}"}"
+    return condensedList
 
 #randomList(start,end,length) -> list
 #start -> int
@@ -126,27 +134,24 @@ def buildLink(ref,content,newTab: bool = False):
 #Creates HTML table with caption Caption, using header, body, and footer as such.
 #header, body, footer: main list is all data, each inner list is a row, each list value is a collumn for that row
 def buildTable(caption: str = "Table",
-               header:list[list[str]] = [[""],[""]],
-               body:list[list[str]] = [[""],[""]],
-               footer:list[list[str]] = [[""],[""]]):
-            multHead = ""
-            multBody = ""
-            multFoot = ""
-            for item in header:
-                multHead += "\t<tr>"
-                for cell in item:
-                    multHead += "<th>" + str(cell) + "</th>"
-                multHead += "</tr>"
-            for item in body:
-                multBody += "\t<tr>"
-                for cell in item:
-                    multBody += "<td>" + str(cell) + "</td>"
-                multBody += "</tr>"
-            for item in footer:
-                multFoot += "\t<tr>"
-                for cell in item:
-                    multFoot += "<td>" + str(cell) + "</td>"
-                multFoot += "</tr>"
+               table:list[list[str]] = [[["",""],
+                                         ["",""]],
+                                        [["",""],
+                                         ["",""]],
+                                        [["",""],
+                                         ["",""]]]):
+            for row in table[0]:
+                multHead = ["\n<th>" + str(cell) + "</th>" for cell in row]
+                multHead.insert(0,"\n\t<tr>")
+                multHead.append("\n</tr>")
+            for row in table[1]:
+                multBody = ["\n\t<th>" + str(cell) + "</th>" for cell in row]
+                multBody.insert(0,"\n<tr>")
+                multBody.append("\n</tr>")
+            for row in table[2]:
+                multFoot = ["\n\t<th>" + str(cell) + "</th>" for cell in row]
+                multFoot.insert(0,"\n<tr>")
+                multFoot.append("\n</tr>")
             return f'''\n\t<table>
             <caption> {caption} </caption>
             <thead>
@@ -243,16 +248,6 @@ def makePage(head:list = genPageHead(),
         {bodyContent}
     </body>
 </html>'''
-
-
-#genPage() -> string
-#Creates the entire HTML page, including head and body.
-#This is the main function that will be called to generate the page.
-def genPage():
-    MPage = pageMultiline.replace("_HEAD_",genPageHead())
-    MPage = MPage.replace("_BODY_",genPageBody())
-    return MPage
-
 
 
 #writePage(path, content) -> None
