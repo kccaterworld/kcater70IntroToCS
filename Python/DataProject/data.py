@@ -31,8 +31,8 @@ site = '''<!DOCTYPE html>
     </body>
 </html>'''
 
-#Helper Functions (copied from my pythonFuncs file)
 
+#Helper Functions (copied from my pythonFuncs file)
 
 #Function to make header in HTML website
 def makeHeader(h,num):
