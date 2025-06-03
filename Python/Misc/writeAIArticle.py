@@ -11,7 +11,7 @@ body = f'''<h1>Mapping Public Understanding of AI Ethics on Wikipedia</h1>
         <p>This study looked at people's understanding of the ethics behind AI by looking at wikipedia pages.</p>
         <h2>NotebookLM Summary:</h2>
         <audio controls>
-            <source src="Mapping_Public_Understanding_of_AI_Ethics_on_Wikipedia.wav" type="audio/wav">
+            <source src="http://marge.stuy.edu/~kcater70/AI/Mapping_Public_Understanding_of_AI_Ethics_on_Wikipedia.wav" type="audio/wav">
         Your browser does not support the audio element.
         </audio>
         <p>{articleSummary}<p>'''
