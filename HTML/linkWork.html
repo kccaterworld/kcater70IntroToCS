@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>Page Title</title>
+        <meta charset="UFT-8"
+        <script>
+            function copyText(text) {
+                navigator.clipboard.writeText(text)
+                console.log("${text} copied successfully!")
+            }
+            function testing() {
+                console.log("Test works!")
+            }
+        </script>
+        <style>
+            button {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <button onclick="testing()">Test Button</button>
+        <button onclick="copyText('copy')" target="_blank">copy</button>
+        <a href="mailto:kc@caterworld.xyz" target="_blank"><button onclick="copyText('kc@caterworld.xyz')" target="_blank" style="border: none; background-color: transparent;">kc@caterworld.xyz</button></a>
+    </body>
+</html>
