@@ -4,7 +4,7 @@ import random
 import time
 turtle.tracer(False)
 
-with open("code/Python/turtlecolors.csv", "r") as colors:
+with open("code/Python/turtlecolors.txt", "r") as colors:
     colors = sorted(list({color for color in colors.read().split("\n")}),key=str.lower)
 
 #nankani

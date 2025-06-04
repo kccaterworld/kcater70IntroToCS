@@ -30,8 +30,8 @@ pageMultiline = '''<!DOCTYPE html>
 </html>'''
 
 #An alphabetically sorted list of every color from the turtle module
-#Requires turtlecolors.csv to be in the same directory as Python file
-with open("turtcolors.csv", "r") as colors:
+#Requires turtlecolors.txt to be in the same directory as Python file
+with open("turtcolors.txt", "r") as colors:
     colors = sorted(list({color for color in colors.read().split("\n")}),key=str.lower)
 
 #Helper Functions
