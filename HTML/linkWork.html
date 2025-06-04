@@ -1,25 +1,48 @@
 <html>
     <head>
         <title>Page Title</title>
-        <meta charset="UFT-8"
+        <meta charset="UFT-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A simple HTML page with buttons to copy text and send an email.">
+        <meta name="keywords" content="HTML, buttons, copy text, email">
+        <meta name="author" content="Kemal Cater">
         <script>
-            function copyText(text) {
-                navigator.clipboard.writeText(text)
-                console.log("${text} copied successfully!")
-            }
             function testing() {
-                console.log("Test works!")
+                console.log("Test works!");
             }
         </script>
-        <style>
-            button {
-                display: block;
-            }
-        </style>
     </head>
     <body>
         <button onclick="testing()">Test Button</button>
         <button onclick="copyText('copy')" target="_blank">copy</button>
-        <a href="mailto:kc@caterworld.xyz" target="_blank"><button onclick="copyText('kc@caterworld.xyz')" target="_blank" style="border: none; background-color: transparent;">kc@caterworld.xyz</button></a>
+        <div class="emailLink">
+            <script>
+                function copyText(text) {
+                    navigator.clipboard.writeText(text);
+                    console.log(`${text} copied successfully!`);
+                }
+            </script>
+            <style>
+                button {
+                    display: block;
+                }
+                .emailLink button {
+                    background-color: transparent;
+                    border: none;
+                }
+                .emailLink a {
+                    text-decoration: none;
+                }
+                .emailLink a:hover, .emailLink a button:hover {
+                    color: blue;
+                    text-decoration: underline;
+                }
+            </style>
+            <a href="mailto:kc@caterworld.xyz" target="_blank">
+                <button onclick="copyText('kc@caterworld.xyz')" target="_blank">
+                    kc@caterworld.xyz
+                </button>
+            </a>
+        </div>
     </body>
 </html>
