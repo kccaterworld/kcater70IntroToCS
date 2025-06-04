@@ -14,7 +14,7 @@ categories = [
 counts = [10, 7, 4, 3]
 
 # Pastel colors
-colors = ['#AEC6CF', '#FFD1DC', '#C1E1C1', '#FDFD96']
+colors = ["#AEC6CF", '#FFD1DC', '#C1E1C1', '#FDFD96']
 
 plt.figure(figsize=(8,5))
 bars = plt.bar(categories, counts, color=colors, edgecolor='gray')
